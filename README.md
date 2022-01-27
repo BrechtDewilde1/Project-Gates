@@ -1,5 +1,5 @@
 # Project Gates 🤑
-![test image size]<img src="https://github.com/BrechtDewilde1/Project-Gates/blob/master/showcase.gif" width="400" height="790">
+<img src="https://github.com/BrechtDewilde1/Project-Gates/blob/master/showCase.gif" width="400" height="700">
 
 # Story 📚
 Since I wanted to get a better overview of my financial expenses and had the urge to save more I decided that my first flutter app would be a Financial app. 
