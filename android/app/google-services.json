@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "417803062682",
+    "project_id": "gates-be930",
+    "storage_bucket": "gates-be930.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:417803062682:android:4bbf6eea1c144e88307e23",
+        "android_client_info": {
+          "package_name": "com.brechtD.gates"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "417803062682-i7f4mbv8ggm45n305r6e706mbd6e75a8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAMTFaOE1nF11kOiBu59E7-K7LZ9fX2LhY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "417803062682-i7f4mbv8ggm45n305r6e706mbd6e75a8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
