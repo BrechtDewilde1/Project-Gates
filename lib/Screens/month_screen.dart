@@ -1,13 +1,40 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Widgets/spendedCard.dart';
 import 'package:flutter_application_1/Widgets/spendingsCard.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
-class monthScreen extends StatelessWidget {
+class monthScreen extends StatefulWidget {
   Map accountData = {};
-  int month_target;
+  late int month_target;
 
   monthScreen(this.accountData, this.month_target);
 
+  @override
+  _monthScreenState createState() =>
+      _monthScreenState(this.accountData, this.month_target);
+}
+
+class _monthScreenState extends State<monthScreen> {
+  Map accountData = {};
+  int month_target;
+  late List transactionCards;
+
+  _monthScreenState(this.accountData, this.month_target) {
+    transactionCards = generate_spendings_list(
+      accountData["transacties_deze_maand"]["data"],
+      accountData["transacties_deze_maand"]["keys"],
+    );
+  }
+
+  // Function to delete transaction from firebase
+  Future<void> deleteFireBaseRow(key) async {
+    FirebaseFirestore firestore = FirebaseFirestore.instance;
+    CollectionReference Spendings =
+        FirebaseFirestore.instance.collection("Spendings");
+    await Spendings.doc(key).delete();
+  }
+
+  // Function to generate the list with all the transaction cards
   List<Widget> generate_spendings_list(List dataList, List keyList) {
     List<Widget> outputList = [];
 
@@ -40,16 +67,32 @@ class monthScreen extends StatelessWidget {
               ),
             ),
             Expanded(
-              child: GridView.count(
-                  crossAxisCount: 1,
-                  crossAxisSpacing: 25,
-                  mainAxisSpacing: 25,
-                  childAspectRatio: 5,
-                  padding: EdgeInsets.only(top: 15),
-                  children: generate_spendings_list(
-                    accountData["transacties_deze_maand"]["data"],
-                    accountData["transacties_deze_maand"]["keys"],
-                  )),
+              child: GridView.builder(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    // CrossAxisCount:1
+                    // corssAxisSpacing: 25
+                    // mainAxisSpacing: 25
+                    // childAspectRatio: 5
+                    crossAxisCount: 1,
+                    crossAxisSpacing: 25,
+                    mainAxisSpacing: 25,
+                    childAspectRatio: 5),
+                padding: EdgeInsets.only(top: 15),
+                itemCount: transactionCards.length,
+                itemBuilder: (context, index) {
+                  final transaction = transactionCards[index];
+                  return Dismissible(
+                      key: UniqueKey(),
+                      onDismissed: (direction) {
+                        setState(() {
+                          deleteFireBaseRow(transactionCards[index].firebaseID);
+                          transactionCards.removeAt(index);
+                        });
+                      },
+                      background: Container(color: Colors.red),
+                      child: transaction);
+                },
+              ),
             ),
           ],
         ),
