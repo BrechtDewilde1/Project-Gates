@@ -34,10 +34,12 @@ class _spendingsCardState extends State<spendingsCard> {
     iconLayout = setCategoryIcon(icoon);
   }
 
-  Future openDialog(String n, String b) => showDialog(
+  Future openDialog(String n, String b, String i) => showDialog(
+      barrierDismissible: false,
+      useSafeArea: true,
       context: context,
       builder: (BuildContext context) {
-        return myDialogBox(n, b);
+        return myDialogBox(n, b, i);
       });
 
   Map setCategoryIcon(String categoryText) {
@@ -100,7 +102,7 @@ class _spendingsCardState extends State<spendingsCard> {
       padding: EdgeInsets.only(left: 20, right: 20),
       child: GestureDetector(
         onTap: () async {
-          final dialogOutput = await openDialog(naam, bedrag);
+          final dialogOutput = await openDialog(naam, bedrag, icoon);
           setState(() {
             naam = dialogOutput[0];
             bedrag = dialogOutput[1];

@@ -4,11 +4,12 @@ import 'package:flutter/cupertino.dart';
 class myDialogBox extends StatefulWidget {
   String description = "";
   String Amount = "";
+  String icoon;
 
-  myDialogBox(this.description, this.Amount);
+  myDialogBox(this.description, this.Amount, this.icoon);
 
   @override
-  _dialogState createState() => _dialogState(description, Amount);
+  _dialogState createState() => _dialogState(description, Amount, icoon);
 }
 
 class _dialogState extends State<myDialogBox> {
@@ -16,10 +17,65 @@ class _dialogState extends State<myDialogBox> {
   late TextEditingController controllerAmount;
   String description = "";
   String Amount = "";
+  String icoon;
 
   String chosenCategory = "";
   String newDescription = "";
   String newAmount = "";
+
+  late Map iconColors;
+
+  Map adaptColorsLayout(icoon) {
+    if (icoon == "nologo") {
+      return iconColors;
+    } else if (icoon == "Restaurant") {
+      iconSelected = true;
+      return iconColors = {
+        "Restaurant": Colors.red[900],
+        "Activiteit": Colors.yellow[100],
+        "Furniture": Colors.blue[100],
+        "Groceries": Colors.green[100],
+        "Holiday": Colors.grey[100]
+      };
+    } else if (icoon == "Activiteit") {
+      iconSelected = true;
+      return iconColors = {
+        "Restaurant": Colors.red[100],
+        "Activiteit": Colors.yellow,
+        "Furniture": Colors.blue[100],
+        "Groceries": Colors.green[100],
+        "Holiday": Colors.grey[100]
+      };
+    } else if (icoon == "Furniture") {
+      iconSelected = true;
+      return iconColors = {
+        "Restaurant": Colors.red[100],
+        "Activiteit": Colors.yellow[100],
+        "Furniture": Colors.blue[900],
+        "Groceries": Colors.green[100],
+        "Holiday": Colors.grey[100]
+      };
+    } else if (icoon == "Groceries") {
+      iconSelected = true;
+      return iconColors = {
+        "Restaurant": Colors.red[100],
+        "Activiteit": Colors.yellow[100],
+        "Furniture": Colors.blue[100],
+        "Groceries": Colors.green[900],
+        "Holiday": Colors.grey[100]
+      };
+    } else if (icoon == "Holiday") {
+      iconSelected = true;
+      return iconColors = {
+        "Restaurant": Colors.red[100],
+        "Activiteit": Colors.yellow[100],
+        "Furniture": Colors.blue[100],
+        "Groceries": Colors.green[100],
+        "Holiday": Colors.grey
+      };
+    }
+    return Map();
+  }
 
   String determineOutput(inputText, o) {
     if (inputText == "") {
@@ -32,7 +88,8 @@ class _dialogState extends State<myDialogBox> {
   @override
   void initState() {
     super.initState();
-
+    chosenCategory = icoon;
+    iconColors = adaptColorsLayout(icoon);
     controller = TextEditingController();
     controllerAmount = TextEditingController();
   }
@@ -44,7 +101,7 @@ class _dialogState extends State<myDialogBox> {
     super.dispose();
   }
 
-  _dialogState(this.description, this.Amount);
+  _dialogState(this.description, this.Amount, this.icoon);
 
   @override
   Widget build(BuildContext context) {
@@ -56,14 +113,6 @@ class _dialogState extends State<myDialogBox> {
             backgroundColor: Colors.transparent,
             child: contentBox(context)));
   }
-
-  Map iconColors = {
-    "Restaurant": Colors.red[100],
-    "Activiteit": Colors.yellow[100],
-    "Furniture": Colors.blue[100],
-    "Groceries": Colors.green[100],
-    "Holiday": Colors.grey[100]
-  };
 
   bool iconSelected = false;
 
@@ -103,17 +152,22 @@ class _dialogState extends State<myDialogBox> {
                         onTap: () {
                           setState(() {
                             chosenCategory = "Restaurant";
-                            if (iconSelected) {
-                              iconColors = {
-                                "Restaurant": Colors.red,
-                                "Activiteit": Colors.yellow[100],
-                                "Furniture": Colors.blue[100],
-                                "Groceries": Colors.green[100],
-                                "Holiday": Colors.grey[100]
-                              };
+                            if (chosenCategory == icoon) {
+                              iconColors["Restaurant"] = Colors.red[100];
+                              icoon = "nologo";
                             } else {
-                              iconSelected = true;
-                              iconColors["Restaurant"] = Colors.red;
+                              if (iconSelected) {
+                                iconColors = {
+                                  "Restaurant": Colors.red,
+                                  "Activiteit": Colors.yellow[100],
+                                  "Furniture": Colors.blue[100],
+                                  "Groceries": Colors.green[100],
+                                  "Holiday": Colors.grey[100]
+                                };
+                              } else {
+                                iconSelected = true;
+                                iconColors["Restaurant"] = Colors.red;
+                              }
                             }
                           });
                         },
@@ -132,18 +186,22 @@ class _dialogState extends State<myDialogBox> {
                         onTap: () {
                           setState(() {
                             chosenCategory = "Activiteit";
-
-                            if (iconSelected) {
-                              iconColors = {
-                                "Restaurant": Colors.red[100],
-                                "Activiteit": Colors.yellow,
-                                "Furniture": Colors.blue[100],
-                                "Groceries": Colors.green[100],
-                                "Holiday": Colors.grey[100]
-                              };
+                            if (chosenCategory == icoon) {
+                              iconColors["Activiteit"] = Colors.yellow[100];
+                              icoon = "nologo";
                             } else {
-                              iconSelected = true;
-                              iconColors["Activiteit"] = Colors.yellow;
+                              if (iconSelected) {
+                                iconColors = {
+                                  "Restaurant": Colors.red[100],
+                                  "Activiteit": Colors.yellow,
+                                  "Furniture": Colors.blue[100],
+                                  "Groceries": Colors.green[100],
+                                  "Holiday": Colors.grey[100]
+                                };
+                              } else {
+                                iconSelected = true;
+                                iconColors["Activiteit"] = Colors.yellow;
+                              }
                             }
                           });
                         },
@@ -161,18 +219,23 @@ class _dialogState extends State<myDialogBox> {
                         splashColor: Color(0xff3D75EF), // Splash color
                         onTap: () {
                           setState(() {
-                            chosenCategory = "Groceries";
-                            if (iconSelected) {
-                              iconColors = {
-                                "Restaurant": Colors.red[100],
-                                "Activiteit": Colors.yellow[100],
-                                "Furniture": Colors.blue,
-                                "Groceries": Colors.green[100],
-                                "Holiday": Colors.grey[100]
-                              };
+                            chosenCategory = "Furniture";
+                            if (chosenCategory == icoon) {
+                              iconColors["Furniture"] = Colors.blue[100];
+                              icoon = "nologo";
                             } else {
-                              iconSelected = true;
-                              iconColors["Furniture"] = Colors.blue;
+                              if (iconSelected) {
+                                iconColors = {
+                                  "Restaurant": Colors.red[100],
+                                  "Activiteit": Colors.yellow[100],
+                                  "Furniture": Colors.blue,
+                                  "Groceries": Colors.green[100],
+                                  "Holiday": Colors.grey[100]
+                                };
+                              } else {
+                                iconSelected = true;
+                                iconColors["Furniture"] = Colors.blue;
+                              }
                             }
                           });
                         },
@@ -189,17 +252,23 @@ class _dialogState extends State<myDialogBox> {
                         onTap: () {
                           setState(() {
                             chosenCategory = "Groceries";
-                            if (iconSelected) {
-                              iconColors = {
-                                "Restaurant": Colors.red[100],
-                                "Activiteit": Colors.yellow[100],
-                                "Furniture": Colors.blue[100],
-                                "Groceries": Colors.green,
-                                "Holiday": Colors.grey[100]
-                              };
+
+                            if (chosenCategory == icoon) {
+                              iconColors["Groceries"] = Colors.green[100];
+                              icoon = "nologo";
                             } else {
-                              iconSelected = true;
-                              iconColors["Groceries"] = Colors.green;
+                              if (iconSelected) {
+                                iconColors = {
+                                  "Restaurant": Colors.red[100],
+                                  "Activiteit": Colors.yellow[100],
+                                  "Furniture": Colors.blue[100],
+                                  "Groceries": Colors.green,
+                                  "Holiday": Colors.grey[100]
+                                };
+                              } else {
+                                iconSelected = true;
+                                iconColors["Groceries"] = Colors.green;
+                              }
                             }
                           });
                         },
@@ -217,19 +286,24 @@ class _dialogState extends State<myDialogBox> {
                         splashColor: Color(0xff3D75EF), // Splash color
                         onTap: () {
                           setState(() {
-                            chosenCategory = "holiday";
+                            chosenCategory = "Holiday";
 
-                            if (iconSelected) {
-                              iconColors = {
-                                "Restaurant": Colors.red[100],
-                                "Activiteit": Colors.yellow[100],
-                                "Furniture": Colors.blue[100],
-                                "Groceries": Colors.green[100],
-                                "Holiday": Colors.grey
-                              };
+                            if (chosenCategory == icoon) {
+                              iconColors["Holiday"] = Colors.grey[100];
+                              icoon = "nologo";
                             } else {
-                              iconSelected = true;
-                              iconColors["Holiday"] = Colors.grey;
+                              if (iconSelected) {
+                                iconColors = {
+                                  "Restaurant": Colors.red[100],
+                                  "Activiteit": Colors.yellow[100],
+                                  "Furniture": Colors.blue[100],
+                                  "Groceries": Colors.green[100],
+                                  "Holiday": Colors.grey
+                                };
+                              } else {
+                                iconSelected = true;
+                                iconColors["Holiday"] = Colors.grey;
+                              }
                             }
                           });
                         },
