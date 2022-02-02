@@ -79,8 +79,8 @@ class _spendingsCardState extends State<spendingsCard> {
         ),
         "Kleur": Colors.green
       };
-    } else if (categoryText == "holiday") {
-      icoon = "holiday";
+    } else if (categoryText == "Holiday") {
+      icoon = "Holiday";
       return {
         "Icoon": Icon(
           Icons.local_airport,

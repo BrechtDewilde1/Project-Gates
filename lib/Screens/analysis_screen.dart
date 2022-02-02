@@ -33,7 +33,7 @@ class _analysisScreenState extends State<analysisScreen> {
     }
 
     Map monthlyAnalysis = {};
-    for (int i = 1; i < (DateTime.now().month + 1); i++) {
+    for (int i = 1; i < (monthlyTransactions.length + 1); i++) {
       Map CategoryMap = {
         "Restaurant": 0.0,
         "Activiteit": 0.0,
@@ -48,7 +48,7 @@ class _analysisScreenState extends State<analysisScreen> {
       for (int j = 0; j < currentMonth.length; j++) {
         Map currentTransaction = currentMonth[j];
         CategoryMap[currentTransaction["Logo"]] +=
-            double.parse(currentTransaction["Bedrag"]);
+            double.parse(currentTransaction["Bedrag"]).round();
       }
 
       monthlyAnalysis[fullMonthName[i]] = [

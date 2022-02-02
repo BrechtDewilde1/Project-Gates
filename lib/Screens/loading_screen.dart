@@ -50,7 +50,7 @@ class _loadingScreenState extends State<loadingScreen> {
 
     double totalSaved = 0.0;
     monthlySaved.forEach((key, value) {
-      if (key < DateTime.now().month) {
+      if (key < DateTime.now().month && key > 1) {
         monthlySavedReturn[fullMonthName[key]] = value;
         totalSaved += value;
       }

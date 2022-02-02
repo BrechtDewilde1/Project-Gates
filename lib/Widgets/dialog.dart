@@ -23,29 +23,30 @@ class _dialogState extends State<myDialogBox> {
   String newDescription = "";
   String newAmount = "";
 
-  late Map iconColors;
+  Map iconColors = {
+    "Restaurant": Colors.red[100],
+    "Activiteit": Colors.yellow[100],
+    "Furniture": Colors.blue[100],
+    "Groceries": Colors.green[100],
+    "Holiday": Colors.grey[100]
+  };
+
+  _dialogState(this.description, this.Amount, this.icoon) {
+    chosenCategory = icoon;
+    iconColors = adaptColorsLayout(icoon);
+  }
 
   Map adaptColorsLayout(icoon) {
     if (icoon == "nologo") {
       return iconColors;
     } else if (icoon == "Restaurant") {
       iconSelected = true;
-      return iconColors = {
-        "Restaurant": Colors.red[900],
-        "Activiteit": Colors.yellow[100],
-        "Furniture": Colors.blue[100],
-        "Groceries": Colors.green[100],
-        "Holiday": Colors.grey[100]
-      };
+      iconColors[icoon] = Colors.red[900];
+      return iconColors;
     } else if (icoon == "Activiteit") {
       iconSelected = true;
-      return iconColors = {
-        "Restaurant": Colors.red[100],
-        "Activiteit": Colors.yellow,
-        "Furniture": Colors.blue[100],
-        "Groceries": Colors.green[100],
-        "Holiday": Colors.grey[100]
-      };
+      iconColors[icoon] = Colors.yellow[900];
+      return iconColors;
     } else if (icoon == "Furniture") {
       iconSelected = true;
       return iconColors = {
@@ -88,8 +89,7 @@ class _dialogState extends State<myDialogBox> {
   @override
   void initState() {
     super.initState();
-    chosenCategory = icoon;
-    iconColors = adaptColorsLayout(icoon);
+
     controller = TextEditingController();
     controllerAmount = TextEditingController();
   }
@@ -100,8 +100,6 @@ class _dialogState extends State<myDialogBox> {
     controllerAmount.dispose();
     super.dispose();
   }
-
-  _dialogState(this.description, this.Amount, this.icoon);
 
   @override
   Widget build(BuildContext context) {
@@ -144,174 +142,191 @@ class _dialogState extends State<myDialogBox> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  ClipOval(
-                    child: Material(
-                      color: iconColors["Restaurant"], // Button color
-                      child: InkWell(
-                        splashColor: Color(0xff3D75EF), // Splash color
-                        onTap: () {
-                          setState(() {
-                            chosenCategory = "Restaurant";
-                            if (chosenCategory == icoon) {
-                              iconColors["Restaurant"] = Colors.red[100];
-                              icoon = "nologo";
-                            } else {
-                              if (iconSelected) {
-                                iconColors = {
-                                  "Restaurant": Colors.red,
-                                  "Activiteit": Colors.yellow[100],
-                                  "Furniture": Colors.blue[100],
-                                  "Groceries": Colors.green[100],
-                                  "Holiday": Colors.grey[100]
-                                };
+                  Flexible(
+                    fit: FlexFit.loose,
+                    child: ClipOval(
+                      child: Material(
+                        color: iconColors["Restaurant"], // Button color
+                        child: InkWell(
+                          splashColor: Color(0xff3D75EF), // Splash color
+                          onTap: () {
+                            setState(() {
+                              chosenCategory = "Restaurant";
+                              if (chosenCategory == icoon) {
+                                iconColors["Restaurant"] = Colors.red[100];
+                                icoon = "nologo";
                               } else {
-                                iconSelected = true;
-                                iconColors["Restaurant"] = Colors.red;
+                                if (iconSelected) {
+                                  iconColors = {
+                                    "Restaurant": Colors.red,
+                                    "Activiteit": Colors.yellow[100],
+                                    "Furniture": Colors.blue[100],
+                                    "Groceries": Colors.green[100],
+                                    "Holiday": Colors.grey[100]
+                                  };
+                                } else {
+                                  iconSelected = true;
+                                  iconColors["Restaurant"] = Colors.red;
+                                }
                               }
-                            }
-                          });
-                        },
-                        child: SizedBox(
-                            width: 56,
-                            height: 56,
-                            child: Icon(Icons.restaurant)),
+                            });
+                          },
+                          child: SizedBox(
+                              width: 56,
+                              height: 56,
+                              child: Icon(Icons.restaurant)),
+                        ),
                       ),
                     ),
                   ),
-                  ClipOval(
-                    child: Material(
-                      color: iconColors["Activiteit"], // Button color
-                      child: InkWell(
-                        splashColor: Color(0xff3D75EF), // Splash color
-                        onTap: () {
-                          setState(() {
-                            chosenCategory = "Activiteit";
-                            if (chosenCategory == icoon) {
-                              iconColors["Activiteit"] = Colors.yellow[100];
-                              icoon = "nologo";
-                            } else {
-                              if (iconSelected) {
-                                iconColors = {
-                                  "Restaurant": Colors.red[100],
-                                  "Activiteit": Colors.yellow,
-                                  "Furniture": Colors.blue[100],
-                                  "Groceries": Colors.green[100],
-                                  "Holiday": Colors.grey[100]
-                                };
+                  Flexible(
+                    fit: FlexFit.loose,
+                    child: ClipOval(
+                      child: Material(
+                        color: iconColors["Activiteit"], // Button color
+                        child: InkWell(
+                          splashColor: Color(0xff3D75EF), // Splash color
+                          onTap: () {
+                            setState(() {
+                              chosenCategory = "Activiteit";
+                              if (chosenCategory == icoon) {
+                                iconColors["Activiteit"] = Colors.yellow[100];
+                                icoon = "nologo";
                               } else {
-                                iconSelected = true;
-                                iconColors["Activiteit"] = Colors.yellow;
+                                if (iconSelected) {
+                                  iconColors = {
+                                    "Restaurant": Colors.red[100],
+                                    "Activiteit": Colors.yellow,
+                                    "Furniture": Colors.blue[100],
+                                    "Groceries": Colors.green[100],
+                                    "Holiday": Colors.grey[100]
+                                  };
+                                } else {
+                                  iconSelected = true;
+                                  iconColors["Activiteit"] = Colors.yellow;
+                                }
                               }
-                            }
-                          });
-                        },
-                        child: SizedBox(
-                            width: 56,
-                            height: 56,
-                            child: Icon(Icons.local_activity)),
+                            });
+                          },
+                          child: SizedBox(
+                              width: 56,
+                              height: 56,
+                              child: Icon(Icons.local_activity)),
+                        ),
                       ),
                     ),
                   ),
-                  ClipOval(
-                    child: Material(
-                      color: iconColors["Furniture"], // Button color
-                      child: InkWell(
-                        splashColor: Color(0xff3D75EF), // Splash color
-                        onTap: () {
-                          setState(() {
-                            chosenCategory = "Furniture";
-                            if (chosenCategory == icoon) {
-                              iconColors["Furniture"] = Colors.blue[100];
-                              icoon = "nologo";
-                            } else {
-                              if (iconSelected) {
-                                iconColors = {
-                                  "Restaurant": Colors.red[100],
-                                  "Activiteit": Colors.yellow[100],
-                                  "Furniture": Colors.blue,
-                                  "Groceries": Colors.green[100],
-                                  "Holiday": Colors.grey[100]
-                                };
+                  Flexible(
+                    fit: FlexFit.loose,
+                    child: ClipOval(
+                      child: Material(
+                        color: iconColors["Furniture"], // Button color
+                        child: InkWell(
+                          splashColor: Color(0xff3D75EF), // Splash color
+                          onTap: () {
+                            setState(() {
+                              chosenCategory = "Furniture";
+                              if (chosenCategory == icoon) {
+                                iconColors["Furniture"] = Colors.blue[100];
+                                icoon = "nologo";
                               } else {
-                                iconSelected = true;
-                                iconColors["Furniture"] = Colors.blue;
+                                if (iconSelected) {
+                                  iconColors = {
+                                    "Restaurant": Colors.red[100],
+                                    "Activiteit": Colors.yellow[100],
+                                    "Furniture": Colors.blue,
+                                    "Groceries": Colors.green[100],
+                                    "Holiday": Colors.grey[100]
+                                  };
+                                } else {
+                                  iconSelected = true;
+                                  iconColors["Furniture"] = Colors.blue;
+                                }
                               }
-                            }
-                          });
-                        },
-                        child: SizedBox(
-                            width: 56, height: 56, child: Icon(Icons.weekend)),
+                            });
+                          },
+                          child: SizedBox(
+                              width: 56,
+                              height: 56,
+                              child: Icon(Icons.weekend)),
+                        ),
                       ),
                     ),
                   ),
-                  ClipOval(
-                    child: Material(
-                      color: iconColors["Groceries"], // Button color
-                      child: InkWell(
-                        splashColor: Color(0xff3D75EF), // Splash color
-                        onTap: () {
-                          setState(() {
-                            chosenCategory = "Groceries";
+                  Flexible(
+                    fit: FlexFit.loose,
+                    child: ClipOval(
+                      child: Material(
+                        color: iconColors["Groceries"], // Button color
+                        child: InkWell(
+                          splashColor: Color(0xff3D75EF), // Splash color
+                          onTap: () {
+                            setState(() {
+                              chosenCategory = "Groceries";
 
-                            if (chosenCategory == icoon) {
-                              iconColors["Groceries"] = Colors.green[100];
-                              icoon = "nologo";
-                            } else {
-                              if (iconSelected) {
-                                iconColors = {
-                                  "Restaurant": Colors.red[100],
-                                  "Activiteit": Colors.yellow[100],
-                                  "Furniture": Colors.blue[100],
-                                  "Groceries": Colors.green,
-                                  "Holiday": Colors.grey[100]
-                                };
+                              if (chosenCategory == icoon) {
+                                iconColors["Groceries"] = Colors.green[100];
+                                icoon = "nologo";
                               } else {
-                                iconSelected = true;
-                                iconColors["Groceries"] = Colors.green;
+                                if (iconSelected) {
+                                  iconColors = {
+                                    "Restaurant": Colors.red[100],
+                                    "Activiteit": Colors.yellow[100],
+                                    "Furniture": Colors.blue[100],
+                                    "Groceries": Colors.green,
+                                    "Holiday": Colors.grey[100]
+                                  };
+                                } else {
+                                  iconSelected = true;
+                                  iconColors["Groceries"] = Colors.green;
+                                }
                               }
-                            }
-                          });
-                        },
-                        child: SizedBox(
-                            width: 56,
-                            height: 56,
-                            child: Icon(Icons.local_grocery_store)),
+                            });
+                          },
+                          child: SizedBox(
+                              width: 56,
+                              height: 56,
+                              child: Icon(Icons.local_grocery_store)),
+                        ),
                       ),
                     ),
                   ),
-                  ClipOval(
-                    child: Material(
-                      color: iconColors["Holiday"], // Button color
-                      child: InkWell(
-                        splashColor: Color(0xff3D75EF), // Splash color
-                        onTap: () {
-                          setState(() {
-                            chosenCategory = "Holiday";
+                  Flexible(
+                    fit: FlexFit.loose,
+                    child: ClipOval(
+                      child: Material(
+                        color: iconColors["Holiday"], // Button color
+                        child: InkWell(
+                          splashColor: Color(0xff3D75EF), // Splash color
+                          onTap: () {
+                            setState(() {
+                              chosenCategory = "Holiday";
 
-                            if (chosenCategory == icoon) {
-                              iconColors["Holiday"] = Colors.grey[100];
-                              icoon = "nologo";
-                            } else {
-                              if (iconSelected) {
-                                iconColors = {
-                                  "Restaurant": Colors.red[100],
-                                  "Activiteit": Colors.yellow[100],
-                                  "Furniture": Colors.blue[100],
-                                  "Groceries": Colors.green[100],
-                                  "Holiday": Colors.grey
-                                };
+                              if (chosenCategory == icoon) {
+                                iconColors["Holiday"] = Colors.grey[100];
+                                icoon = "nologo";
                               } else {
-                                iconSelected = true;
-                                iconColors["Holiday"] = Colors.grey;
+                                if (iconSelected) {
+                                  iconColors = {
+                                    "Restaurant": Colors.red[100],
+                                    "Activiteit": Colors.yellow[100],
+                                    "Furniture": Colors.blue[100],
+                                    "Groceries": Colors.green[100],
+                                    "Holiday": Colors.grey
+                                  };
+                                } else {
+                                  iconSelected = true;
+                                  iconColors["Holiday"] = Colors.grey;
+                                }
                               }
-                            }
-                          });
-                        },
-                        child: SizedBox(
-                          width: 56,
-                          height: 56,
-                          child: Icon(
-                            Icons.local_airport,
+                            });
+                          },
+                          child: SizedBox(
+                            width: 56,
+                            height: 56,
+                            child: Icon(
+                              Icons.local_airport,
+                            ),
                           ),
                         ),
                       ),
@@ -341,6 +356,7 @@ class _dialogState extends State<myDialogBox> {
                 style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600),
               ),
               TextField(
+                keyboardType: TextInputType.number,
                 decoration: InputDecoration(hintText: Amount),
                 controller: controllerAmount,
               ),
